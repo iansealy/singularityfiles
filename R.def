@@ -1,0 +1,55 @@
+Bootstrap: library
+From: ubuntu:18.04
+
+%labels
+    Author Ian Sealy
+    Version 3.6.0.20190702
+
+%post
+    apt-get -q -y install gnupg ca-certificates
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list
+    apt-get -q update
+    apt-get -q -y upgrade
+    apt-get -q -y install r-base r-base-dev libssl-dev libcurl4-openssl-dev libxml2-dev libcairo2-dev
+    R --slave -e "update.packages(ask=FALSE)"
+    R --slave -e "install.packages('tidyverse')"
+    R --slave -e "install.packages('BiocManager')"
+    R --slave -e "BiocManager::install()"
+    R --slave -e "BiocManager::install('DESeq2')"
+    R --slave -e "BiocManager::install('tximport')"
+    R --slave -e "BiocManager::install('topGO')"
+    R --slave -e "BiocManager::install('Rgraphviz')"
+    R --slave -e "BiocManager::install('karyoploteR')"
+    R --slave -e "BiocManager::install('Mfuzz')"
+    R --slave -e "BiocManager::install('limma')"
+    R --slave -e "BiocManager::install('affy')"
+    R --slave -e "BiocManager::install('ChIPQC')"
+    R --slave -e "install.packages('pheatmap')"
+    R --slave -e "install.packages('naturalsort')"
+    R --slave -e "install.packages('svglite')"
+    R --slave -e "install.packages('gplots')"
+    R --slave -e "install.packages('clustree')"
+    R --slave -e "install.packages('ggdendro')"
+    R --slave -e "install.packages('cowplot')"
+    R --slave -e "install.packages('optparse')"
+    R --slave -e "install.packages('devtools')"
+    apt-get -q -y purge r-base-dev build-essential
+    apt-get -q -y autoremove
+    apt-get -q -y clean
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LC_ALL=C
+
+%runscript
+    R "$@"
+
+%apprun R
+    R "$@"
+
+%apprun Rscript
+    Rscript "$@"
+
+%help
+    R, including tidyverse, Bioconductor, etc...
