@@ -33,7 +33,7 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" > /etc/apt/sources
     export LC_ALL=C
 
 %runscript
-    ref_gen_edit.pl "$@"
+    /usr/local/bin/ref_gen_edit.pl "$@"
 
 %help
     RefGenEdit - Reference Genome Editor

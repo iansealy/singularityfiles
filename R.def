@@ -43,13 +43,13 @@ From: ubuntu:18.04
     export LC_ALL=C
 
 %runscript
-    R "$@"
+    /usr/bin/R "$@"
 
 %apprun R
-    R "$@"
+    /usr/bin/R "$@"
 
 %apprun Rscript
-    Rscript "$@"
+    /usr/bin/Rscript "$@"
 
 %help
     R, including tidyverse, Bioconductor, etc...
