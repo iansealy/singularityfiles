@@ -1,0 +1,28 @@
+Bootstrap: library
+From: ubuntu:18.04
+
+%labels
+    Author Ian Sealy
+    Version 19.04.1
+
+%post
+    apt-get -q update
+    apt-get -q -y upgrade
+    apt-get -q -y install curl openjdk-11-jre-headless
+    cd /usr/local/bin
+    curl -SsL https://github.com/nextflow-io/nextflow/releases/download/v19.04.1/nextflow-19.04.1-all -o nextflow
+    chmod a+x nextflow
+    apt-get -q -y purge curl
+    apt-get -q -y autoremove
+    apt-get -q -y clean
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LC_ALL=C
+    export NXF_VER=19.04.1
+
+%runscript
+    /usr/local/bin/nextflow "$@"
+
+%help
+    Nextflow - data-driven computational pipelines
