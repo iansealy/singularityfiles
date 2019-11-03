@@ -3,7 +3,7 @@ From: ubuntu:18.04
 
 %labels
     Author Ian Sealy
-    Version 3.6.1.20191031
+    Version 3.6.1.20191103
 
 %post
     apt-get -q -y install gnupg ca-certificates software-properties-common
@@ -24,8 +24,6 @@ From: ubuntu:18.04
     R --slave -e "BiocManager::install('karyoploteR')"
     R --slave -e "BiocManager::install('Mfuzz')"
     R --slave -e "BiocManager::install('limma')"
-    R --slave -e "BiocManager::install('affy')"
-    R --slave -e "BiocManager::install('ChIPQC')"
     R --slave -e "install.packages('pheatmap')"
     R --slave -e "install.packages('naturalsort')"
     R --slave -e "install.packages('svglite')"
@@ -33,6 +31,9 @@ From: ubuntu:18.04
     R --slave -e "install.packages('clustree')"
     R --slave -e "install.packages('ggdendro')"
     R --slave -e "install.packages('cowplot')"
+    R --slave -e "install.packages('UpSetR')"
+    R --slave -e "install.packages('corrplot')"
+    R --slave -e "install.packages('Cairo')"
     R --slave -e "install.packages('optparse')"
     R --slave -e "install.packages('devtools')"
     apt-get -q -y purge r-base-dev
