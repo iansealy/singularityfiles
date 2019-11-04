@@ -1,0 +1,49 @@
+Bootstrap: library
+From: ubuntu:18.04
+
+%labels
+    Author Ian Sealy
+    Version 0.6.4
+
+%post
+    apt-get -q -y install gnupg ca-certificates software-properties-common
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+    add-apt-repository universe
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list
+    apt-get -q update
+    apt-get -q -y upgrade
+    apt-get -q -y install build-essential curl r-base r-base-dev libssl-dev libcurl4-openssl-dev libxml2-dev libcairo2-dev libxt-dev python-pip
+    R --slave -e "update.packages(ask=FALSE)"
+    R --slave -e "install.packages('UpSetR')"
+    R --slave -e "install.packages('corrplot')"
+    R --slave -e "install.packages('Cairo')"
+    curl -SsOL https://github.com/arq5x/bedtools2/releases/download/v2.29.0/bedtools-2.29.0.tar.gz
+    tar zxf bedtools-2.29.0.tar.gz
+    cd bedtools2
+    make
+    cp bin/* /usr/bin
+    cd ..
+    rm -rf bedtools*
+    pip install intervene
+    apt-get -q -y purge build-essential curl r-base-dev
+    apt-get -q -y autoremove
+    apt-get -q -y clean
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LC_ALL=C
+
+%runscript
+    /usr/local/bin/intervene "$@"
+
+%apprun bedtools
+    /usr/bin/bedtools "$@"
+
+%apprun R
+    /usr/bin/R "$@"
+
+%apprun Rscript
+    /usr/bin/Rscript "$@"
+
+%help
+    Intervene - a tool for intersection and visualisation of multiple gene or genomic region sets
