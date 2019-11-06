@@ -3,7 +3,7 @@ From: ubuntu:18.04
 
 %labels
     Author Ian Sealy
-    Version 0.1.43.97
+    Version 0.1.44.98
 
 %post
     apt-get -q -y install gnupg ca-certificates
@@ -18,12 +18,12 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" > /etc/apt/sources
     apt-get -q -y install build-essential cpanminus curl git r-base r-base-dev
     apt-get -q -y install libdbd-mysql-perl libpath-tiny-perl libreadonly-perl libreadonly-xs-perl libtry-tiny-perl
     mkdir -p /usr/local/lib/site_perl
-    git clone -b release/97 https://github.com/Ensembl/ensembl.git
+    git clone -b release/98 https://github.com/Ensembl/ensembl.git
     mv ensembl/modules/* /usr/local/lib/site_perl
     rm -rf ensembl
-    curl -SsOL https://github.com/iansealy/topgo-wrapper/releases/download/v0.1.43/topgo-wrapper-0.1.43.tar.gz
-    tar zxf topgo-wrapper-0.1.43.tar.gz
-    cd topgo-wrapper-0.1.43
+    curl -SsOL https://github.com/iansealy/topgo-wrapper/releases/download/v0.1.44/topgo-wrapper-0.1.44.tar.gz
+    tar zxf topgo-wrapper-0.1.44.tar.gz
+    cd topgo-wrapper-0.1.44
     perl Makefile.PL
     cpanm --installdeps .
     make
@@ -31,9 +31,9 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" > /etc/apt/sources
     make install
     mkdir /usr/local/share/topgo-wrapper
     mv data /usr/local/share/topgo-wrapper
-    find /usr/local/share/topgo-wrapper -type f | grep -v e97 | xargs rm
+    find /usr/local/share/topgo-wrapper -type f | grep -v e98 | xargs rm
     cd ..
-    rm -rf topgo-wrapper-0.1.43*
+    rm -rf topgo-wrapper-0.1.44*
     R --slave -e "update.packages(ask=FALSE)"
     R --slave -e "install.packages('BiocManager')"
     R --slave -e "BiocManager::install()"
