@@ -1,26 +1,17 @@
 Bootstrap: library
-From: ubuntu:18.04
+From: alpine:3.9
 
 %labels
     Author Ian Sealy
     Version 2.7.3a
 
 %post
-    apt-get -q update
-    apt-get -q -y upgrade
-    apt-get -q -y install --no-install-recommends zlib1g-dev
-    apt-get -q -y install build-essential curl
+    apk add --no-cache curl
     curl -SsOL https://github.com/alexdobin/STAR/archive/2.7.3a.tar.gz
+    apk del curl
     tar zxf 2.7.3a.tar.gz
-    cd STAR-2.7.3a/source
-    make STAR
-    cp STAR /usr/local/bin
-    cd /usr/local/bin
-    apt-get -q -y purge build-essential curl
-    apt-get -q -y autoremove
-    apt-get -q -y clean
-    rm -rf /var/lib/apt/lists/*
-    rm -rf ~/2.7.3a.tar.gz ~/STAR-2.7.3a
+    cp STAR-2.7.3a/bin/Linux_x86_64_static/STAR /usr/local/bin
+    rm -rf 2.7.3a.tar.gz STAR-2.7.3a
 
 %environment
     export LC_ALL=C
