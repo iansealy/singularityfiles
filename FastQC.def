@@ -1,0 +1,24 @@
+Bootstrap: library
+From: alpine:3.9
+
+%labels
+    Author Ian Sealy
+    Version 0.11.9
+
+%post
+    apk add --no-cache curl openjdk8-jre-base perl
+    curl -SsOL http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+    apk del curl
+    unzip fastqc_v0.11.9.zip
+    mv FastQC /opt
+    chmod +x /opt/FastQC/fastqc
+    rm fastqc_v0.11.9.zip
+
+%environment
+    export LC_ALL=C
+
+%runscript
+    /opt/FastQC/fastqc "$@"
+
+%help
+    FastQC - quality control application for high throughput sequence data
