@@ -6,7 +6,7 @@ From: alpine:3.9
     Version 0.11.9
 
 %post
-    apk add --no-cache curl openjdk8-jre-base perl
+    apk add --no-cache curl openjdk8-jre fontconfig ttf-dejavu perl
     curl -SsOL http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
     apk del curl
     unzip fastqc_v0.11.9.zip
